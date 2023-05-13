@@ -1,6 +1,6 @@
 import React from 'react';
 import './ChatHeader.scss';
-import { Avatar } from 'antd';
+import { Avatar, Button, Popconfirm } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import {
   FolderAddOutlined,
@@ -34,9 +34,7 @@ const ChatHeader = ({
     },
   ];
 
-  const [navbarTitleActive, setNavbarTitleActive] = React.useState(
-    navbarTitles[0]
-  );
+  const [navbarTitleActive, setNavbarTitleActive] = React.useState(navbarTitles[0]);
 
   const navigate = useNavigate();
 
@@ -58,23 +56,29 @@ const ChatHeader = ({
   return (
     <>
       <header>
-        <ul className='navbar-titles'>
+        <ul className="navbar-titles">
           {navbarTitles.map((navbar) => (
             <li
               key={navbar.text}
-              className={
-                navbar?.text === navbarTitleActive?.text ? 'active' : ''
-              }
+              className={navbar?.text === navbarTitleActive?.text ? 'active' : ''}
               onClick={() => clickNavbarTitle(navbar)}>
-              <span className='icon'>{navbar.icon}</span>
-              <span className='title'>{navbar.text}</span>
+              <span className="icon">{navbar.icon}</span>
+              <span className="title">{navbar.text}</span>
             </li>
           ))}
         </ul>
-        <div className='account-user'>
-          <Avatar size='large'>{userName[0]}</Avatar>
+        <div className="account-user">
+          <Avatar size="large">{userName[0]}</Avatar>
           <span>{userName}</span>
-          <LogoutOutlined className='logout-button' onClick={logout} />
+
+          <Popconfirm
+            placement="top"
+            title="Вы действительно хотите выйти?"
+            onConfirm={logout}
+            okText="Да"
+            cancelText="Нет">
+            <LogoutOutlined className="logout-button" />
+          </Popconfirm>
         </div>
       </header>
     </>

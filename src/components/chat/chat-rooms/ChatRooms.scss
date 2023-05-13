@@ -33,3 +33,13 @@ aside {
     }
   }
 }
+
+.modal-create-room,
+.modal-join-room {
+  .form-item {
+    margin-bottom: 1rem;
+  }
+  .ant-form-item-explain-error {
+    margin: 0.5rem 0;
+  }
+}

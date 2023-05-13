@@ -19,4 +19,13 @@
     gap: 1.5rem;
     align-items: center;
   }
+  .ant-form-item-explain-error {
+    margin: 0.75rem;
+  }
+  .form-item {
+    margin-bottom: 1.5rem;
+  }
+  .form-item:last-child {
+    margin-bottom: 0;
+  }
 }

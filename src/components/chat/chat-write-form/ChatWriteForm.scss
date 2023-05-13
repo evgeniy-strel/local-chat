@@ -12,7 +12,7 @@
   .emoji {
     position: relative;
     aside {
-      position: absolute;
+      position: absolute !important;
       bottom: 40px;
       right: 0;
     }

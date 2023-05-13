@@ -15,13 +15,7 @@ const strangerMessages = [
   'The number of cells that raster is moved to the right',
 ];
 
-const rooms = [
-  'Lupe frisco',
-  'Clarck Kent',
-  'Bill Gates',
-  'Ilon Mask',
-  'Friends',
-];
+const rooms = ['Lupe frisco', 'Clarck Kent', 'Bill Gates', 'Ilon Mask', 'Friends'];
 
 const ChatPage = ({ userName }) => {
   const [modalJoinOpen, setModalJoinOpen] = React.useState(false);
@@ -29,7 +23,7 @@ const ChatPage = ({ userName }) => {
   const [roomActive, setRoomActive] = React.useState(rooms[0]);
 
   return (
-    <div className='container container-big my-chats'>
+    <div className="container container-big my-chats">
       <ChatHeader
         userName={userName}
         modalJoinOpen={modalCreateOpen}
@@ -37,10 +31,10 @@ const ChatPage = ({ userName }) => {
         setModalJoinOpen={setModalJoinOpen}
         setModalCreateOpen={setModalCreateOpen}
       />
-      <Row className='content'>
+      <Row className="content">
         <ChatRooms
           rooms={rooms}
-          modalJoinOpen={modalCreateOpen}
+          modalJoinOpen={modalJoinOpen}
           modalCreateOpen={modalCreateOpen}
           roomActive={roomActive}
           setModalJoinOpen={setModalJoinOpen}
@@ -49,7 +43,7 @@ const ChatPage = ({ userName }) => {
         />
         <Col md={16}>
           <main>
-            <div className='title-room'>{roomActive}</div>
+            <div className="title-room">{roomActive}</div>
             <ChatMessages messages={strangerMessages} />
             <ChatWriteForm />
           </main>
