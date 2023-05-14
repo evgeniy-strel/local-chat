@@ -9,6 +9,8 @@ npm run start
 
 ![Демонстрация чата](https://github.com/evgeniy-strel/local-chat/assets/82458628/6d749507-d24d-498a-a4d7-9b7db9ab01eb)
 
+Посмотреть проект: https://evgeniy-strel.github.io/local-chat
+
 ## Функционал:
 - вход по имени;
 - добавление комнат. Если комната существует, пользователь будет присоеденен к ней;
