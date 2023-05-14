@@ -4,7 +4,7 @@ import './ChatWriteForm.scss';
 import { Form, Input } from 'antd';
 import EmojiPicker from 'emoji-picker-react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addMessageToRoom } from '../../../store/roomSlice';
+import { addMessageToRoom, setError } from '../../../store/roomSlice';
 import { getUserName } from '../../../store/selectors';
 
 const ChatWriteForm = ({ selectedImage, setSelectedImage }) => {
@@ -28,18 +28,30 @@ const ChatWriteForm = ({ selectedImage, setSelectedImage }) => {
     const file = e.target.files[0];
     if (!file) return;
 
+    const errorFileFormat = getErrorFileFormat(file);
+    if (errorFileFormat) {
+      dispatch(setError({ error: errorFileFormat }));
+      return;
+    }
+
     const reader = new FileReader();
     reader.readAsDataURL(file);
 
     reader.onload = function () {
-      const result = reader.result;
-      dispatch(addMessageToRoom({ userName, messageText: result }));
+      dispatch(addMessageToRoom({ userName, messageText: reader.result }));
     };
     reader.onerror = function (error) {
       alert('Произошла ошибка загрузки файла: ', error);
     };
+  };
 
-    console.log(file);
+  const getErrorFileFormat = (file) => {
+    let error = null;
+    if (!['image/gif', 'image/png', 'image/jpeg', 'image/webp'].includes(file.type))
+      error = `Расширение файла "${file.name}" не поддерживается. Загрузите картинку в формате gif, jpeg, png или webp`;
+    else if (file.size >= 1048576) error = `Размер файла "${file.name}" должен быть менее 1 МБ`;
+
+    return error;
   };
 
   const onClickEmojiIcon = () => {

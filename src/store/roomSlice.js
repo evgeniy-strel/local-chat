@@ -45,6 +45,9 @@ const roomsSlice = createSlice({
       state.rooms = updatedRooms;
       localStorage.setItem('rooms', JSON.stringify(updatedRooms));
     },
+    setError(state, { payload: { error } }) {
+      state.error = error;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(logout, (state, action) => {
@@ -54,6 +57,6 @@ const roomsSlice = createSlice({
   },
 });
 
-export const { initRooms, addRoom, setRoomActive, addMessageToRoom } = roomsSlice.actions;
+export const { initRooms, addRoom, setRoomActive, addMessageToRoom, setError } = roomsSlice.actions;
 
 export const roomsReducer = roomsSlice.reducer;
