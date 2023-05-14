@@ -1,11 +1,15 @@
 .write-form {
   flex-shrink: 0;
+  box-sizing: content-box;
   height: 60px;
   padding: 1rem 1.5rem;
   background-color: var(--gray-color-2);
   display: flex;
-  align-items: center;
   gap: 1.2rem;
+  align-items: center;
+  div {
+    margin: 0 !important;
+  }
   .text {
     flex-grow: 1;
   }
@@ -17,7 +21,7 @@
       right: 0;
     }
   }
-  .icon {
+  .icon span {
     font-size: 1.5rem;
     cursor: pointer;
   }

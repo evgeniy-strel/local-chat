@@ -1,30 +1,38 @@
-import React from 'react';
+import React, { useReducer } from 'react';
 import './ChatRooms.scss';
 import { Input, Avatar, Col, Modal, Form, Button } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { getRoomActive, getRooms, getUserName, getUserRooms } from '../../../store/selectors';
+import { addRoom, initRooms, setRoomActive } from '../../../store/roomSlice';
+import { joinUserToRoom } from '../../../store/userSlice';
 
-const ChatRooms = ({
-  rooms,
-  roomActive,
-  modalJoinOpen,
-  modalCreateOpen,
-  setModalCreateOpen,
-  setModalJoinOpen,
-  setRoomActive,
-}) => {
+const ChatRooms = ({ modalJoinOpen, modalCreateOpen, setModalCreateOpen, setModalJoinOpen }) => {
+  const dispatch = useDispatch();
+  const userRooms = useSelector((state) => getUserRooms(state));
+  const roomActive = useSelector((state) => getRoomActive(state));
+
   const [searchRoomName, setSearchRoomName] = React.useState('');
+  const userName = useSelector((state) => getUserName(state));
+
   const [formAdd] = Form.useForm();
   const [formJoin] = Form.useForm();
 
   const clickRoom = (room) => {
-    setRoomActive(room);
+    dispatch(setRoomActive(room));
   };
 
-  const addRoom = ({ nameRoom }) => {
-    rooms.push(nameRoom);
-    setRoomActive(rooms[rooms.length - 1]);
+  const addRoomLocal = ({ roomName }) => {
+    const answer = dispatch(addRoom({ roomName, userName }));
+    console.log(answer);
     setModalCreateOpen(false);
     formAdd.resetFields();
+  };
+
+  const joinRoomLocal = ({ roomName }) => {
+    dispatch(joinUserToRoom({ roomName, userName }));
+    setModalJoinOpen(false);
+    formJoin.resetFields();
   };
 
   const onChangeSearchRoom = (e) => {
@@ -41,7 +49,9 @@ const ChatRooms = ({
     formJoin.resetFields();
   };
 
-  console.log(modalCreateOpen, modalJoinOpen);
+  React.useEffect(() => {
+    dispatch(initRooms());
+  }, []);
 
   return (
     <>
@@ -55,17 +65,17 @@ const ChatRooms = ({
             prefix={<SearchOutlined />}
           />
           <ul className="rooms">
-            {rooms
-              .filter((room) => room.toLowerCase().includes(searchRoomName.toLowerCase()))
+            {userRooms
+              .filter((room) => room?.name?.toLowerCase().includes(searchRoomName.toLowerCase()))
               .map((room) => (
                 <li
-                  key={room}
-                  className={room === roomActive ? 'room active' : `room`}
+                  key={room?.name}
+                  className={room?.name === roomActive?.name ? 'room active' : `room`}
                   onClick={() => clickRoom(room)}>
                   <Avatar className="room-avatar" size="large">
-                    {room[0]}
+                    {room?.name[0]}
                   </Avatar>
-                  <span className="title">{room}</span>
+                  <span className="title">{room?.name}</span>
                 </li>
               ))}
           </ul>
@@ -77,14 +87,10 @@ const ChatRooms = ({
         footer={null}
         className="modal-create-room"
         onCancel={closeModalCreate}>
-        <Form
-          form={formAdd}
-          name="addRoom"
-          onFinish={addRoom}
-          onFinishFailed={() => console.log('fail')}>
+        <Form form={formAdd} name="addRoom" onFinish={addRoomLocal}>
           <p>Введите название новой комнаты:</p>
           <Form.Item
-            name="nameRoom"
+            name="roomName"
             rules={[{ required: true, message: 'Вы не ввели название комнаты' }]}
             className="form-item">
             <Input size="medium" minLength={4} maxLength={20} />
@@ -102,10 +108,10 @@ const ChatRooms = ({
         footer={null}
         className="modal-join-room"
         onCancel={closeModalJoin}>
-        <Form form={formJoin} name="joinRoom" onFinish={() => {}}>
+        <Form form={formJoin} name="joinRoom" onFinish={joinRoomLocal}>
           <p>Введите название комнаты:</p>
           <Form.Item
-            name="joinRoom"
+            name="roomName"
             rules={[{ required: true, message: 'Вы не ввели название комнаты' }]}
             className="form-item">
             <Input size="medium" minLength={4} maxLength={20} />

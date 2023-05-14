@@ -8,7 +8,7 @@ main {
   font-size: 1rem;
   font-family: 'Roboto', sans-serif;
   flex-grow: 1;
-  height: 100%;
+  height: calc(750px - 90px);
   display: flex;
   flex-direction: column;
   .title-room {

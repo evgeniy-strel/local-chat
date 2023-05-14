@@ -6,20 +6,16 @@ import './style.scss';
 
 function App() {
   const navigate = useNavigate();
-  const [userName, setUserName] = React.useState('');
 
   React.useEffect(() => {
     navigate('/login');
   }, []);
 
   return (
-    <div className='wrapper'>
+    <div className="wrapper">
       <Routes>
-        <Route
-          path='/login'
-          element={<LoginPage userName={userName} setUserName={setUserName} />}
-        />
-        <Route path='/my_chats' element={<ChatPage userName={userName} />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/my_chats" element={<ChatPage userName={'userName'} />} />
       </Routes>
     </div>
   );

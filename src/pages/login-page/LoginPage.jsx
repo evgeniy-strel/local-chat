@@ -3,21 +3,17 @@ import './LoginPage.scss';
 import { Row, Col, Input, Button, Form } from 'antd';
 import { LoginOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { loginUser } from '../../store/userSlice';
 
-const LoginPage = ({ userName, setUserName }) => {
+const LoginPage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const handleChangeName = (e) => {
-    setUserName(e.target.value);
-  };
-
-  const handleLogin = () => {
+  const handleLogin = ({ userName }) => {
+    dispatch(loginUser(userName));
     navigate('/my_chats');
   };
-
-  React.useEffect(() => {
-    setUserName('');
-  }, []);
 
   return (
     <div className="container container-small">
@@ -33,13 +29,7 @@ const LoginPage = ({ userName, setUserName }) => {
               name="userName"
               rules={[{ required: true, message: 'Вы не ввели имя' }]}
               className="form-item">
-              <Input
-                size="large"
-                value={userName}
-                minLength={4}
-                maxLength={20}
-                onChange={handleChangeName}
-              />
+              <Input size="large" minLength={4} maxLength={20} />
             </Form.Item>
             <Form.Item className="form-item">
               <Button

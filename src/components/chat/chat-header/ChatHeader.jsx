@@ -8,14 +8,11 @@ import {
   RightCircleOutlined,
   WechatOutlined,
 } from '@ant-design/icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserName } from './../../../store/selectors';
+import { logout } from '../../../store/userSlice';
 
-const ChatHeader = ({
-  userName,
-  modalJoinOpen,
-  modalCreateOpen,
-  setModalJoinOpen,
-  setModalCreateOpen,
-}) => {
+const ChatHeader = ({ modalJoinOpen, modalCreateOpen, setModalJoinOpen, setModalCreateOpen }) => {
   const navbarTitles = [
     {
       icon: <WechatOutlined />,
@@ -34,16 +31,20 @@ const ChatHeader = ({
     },
   ];
 
+  const userName = useSelector((state) => getUserName(state));
+
   const [navbarTitleActive, setNavbarTitleActive] = React.useState(navbarTitles[0]);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const clickNavbarTitle = (navbar) => {
     setNavbarTitleActive(navbar);
     navbar?.onClick();
   };
 
-  const logout = () => {
+  const logoutUser = () => {
+    dispatch(logout());
     navigate('/login');
   };
 
@@ -74,7 +75,7 @@ const ChatHeader = ({
           <Popconfirm
             placement="top"
             title="Вы действительно хотите выйти?"
-            onConfirm={logout}
+            onConfirm={logoutUser}
             okText="Да"
             cancelText="Нет">
             <LogoutOutlined className="logout-button" />
