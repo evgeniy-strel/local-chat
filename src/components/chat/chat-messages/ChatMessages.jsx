@@ -3,8 +3,10 @@ import './ChatMessages.scss';
 import { Avatar, Empty } from 'antd';
 import { useSelector } from 'react-redux';
 import { getRoomActive, getUserName } from '../../../store/selectors';
+import { RetweetOutlined } from '@ant-design/icons';
+import TextMessageBlock from './text-message-block/TextMessageBlock';
 
-const ChatMessages = ({ image }) => {
+const ChatMessages = ({ setReplyMessage }) => {
   const messages = useSelector((state) => getRoomActive(state))?.messages;
   const userName = useSelector((state) => getUserName(state));
 
@@ -54,36 +56,17 @@ const ChatMessages = ({ image }) => {
             </div>
             <div className="user-name-text">
               <div className="user-name">{message?.userName}</div>
-              <div className="text">
-                {message?.text?.slice(0, 5) === 'data:' ? (
-                  <img src={message?.text} alt="not found" />
-                ) : (
-                  message?.text
-                )}
-              </div>
+              <TextMessageBlock message={message} />
             </div>
           </div>
-          <div className="date">{getFormattedDate(message?.date)}</div>
+          <div className="date-reply">
+            <div className="reply" onClick={() => setReplyMessage(message)}>
+              <RetweetOutlined />
+            </div>
+            <div className="date">{getFormattedDate(message?.date)}</div>
+          </div>
         </div>
       ))}
-      {image && (
-        <div className="message">
-          <div className="avatar-message-flex">
-            <div>
-              <Avatar className="user-avatar" size="large">
-                {'S'}
-              </Avatar>
-            </div>
-            <div className="user-name-text">
-              <div className="user-name">{'Andrey'}</div>
-              <div className="text">
-                <img src={URL.createObjectURL(image)} width={250} height={200} alt="not found" />
-              </div>
-            </div>
-          </div>
-          <div className="date">5</div>
-        </div>
-      )}
     </div>
   );
 };

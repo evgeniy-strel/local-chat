@@ -14,11 +14,12 @@ const ChatPage = ({ userName }) => {
   const [modalJoinOpen, setModalJoinOpen] = React.useState(false);
   const [modalCreateOpen, setModalCreateOpen] = React.useState(false);
   const roomActive = useSelector((state) => getRoomActive(state));
+  const [replyMessage, setReplyMessage] = React.useState();
 
   const errorsRoom = useSelector((state) => getErrorRooms(state));
   const errorsUser = useSelector((state) => getErrorUser(state));
 
-  const [selectedImage, setSelectedImage] = React.useState();
+  console.log(replyMessage);
 
   React.useEffect(() => {
     if (errorsRoom)
@@ -58,8 +59,8 @@ const ChatPage = ({ userName }) => {
             {roomActive ? (
               <main>
                 <div className="title-room">{roomActive?.name}</div>
-                <ChatMessages image={selectedImage} />
-                <ChatWriteForm selectedImage={selectedImage} setSelectedImage={setSelectedImage} />
+                <ChatMessages setReplyMessage={setReplyMessage} />
+                <ChatWriteForm replyMessage={replyMessage} setReplyMessage={setReplyMessage} />
               </main>
             ) : (
               <div className="empty-block">

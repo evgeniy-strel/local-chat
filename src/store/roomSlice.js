@@ -30,11 +30,15 @@ const roomsSlice = createSlice({
     setRoomActive(state, action) {
       state.active = action.payload;
     },
-    addMessageToRoom(state, { payload: { userName, messageText } }) {
+    addMessageToRoom(state, { payload: { userName, messageText, replyMessage } }) {
+      const formatReplyMessage = replyMessage
+        ? { text: replyMessage.text, userName: replyMessage.userName }
+        : undefined;
       const updateRoom = state.active;
       updateRoom.messages.push({
         userName,
         text: messageText,
+        replyMessage: formatReplyMessage,
         date: Date.now(),
       });
       state.active = updateRoom;

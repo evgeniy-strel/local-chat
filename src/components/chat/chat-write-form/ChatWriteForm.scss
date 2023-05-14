@@ -1,8 +1,7 @@
 .write-form {
+  position: relative;
   flex-shrink: 0;
-  box-sizing: content-box;
-  height: 60px;
-  padding: 1rem 1.5rem;
+  padding: 1.75rem 1.5rem;
   background-color: var(--gray-color-2);
   display: flex;
   gap: 1.2rem;
@@ -24,5 +23,34 @@
   .icon span {
     font-size: 1.5rem;
     cursor: pointer;
+  }
+}
+
+.reply-message {
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+  gap: 1rem;
+  font-size: 0.9rem;
+  padding: 1rem 1rem 0 1rem;
+  background-color: var(--gray-color-2);
+  .retweet-icon {
+    font-size: 1.2rem;
+    color: var(--blue-color-2);
+  }
+  .username-text {
+    .username {
+      color: var(--blue-color-2);
+    }
+    flex-grow: 1;
+  }
+  .delete-reply {
+    cursor: pointer;
+    color: var(--gray-color-3);
+  }
+  .reply-img-form {
+    width: 15%;
   }
 }
