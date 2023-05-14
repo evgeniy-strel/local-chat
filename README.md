@@ -7,9 +7,9 @@ npm install
 npm run start
 ```
 
-![Демонстрация чата](https://img-host.ru/b9GEd.png)
+![Демонстрация чата](https://github.com/evgeniy-strel/local-chat/assets/82458628/6d749507-d24d-498a-a4d7-9b7db9ab01eb)
 
-Функционал:
+## Функционал:
 - вход по имени;
 - добавление комнат. Если комната существует, пользователь будет присоеденен к ней;
 - присоединение к комнате;
@@ -18,7 +18,7 @@ npm run start
 - поддержка картинок до 1 МБ популярных форматов
 - поддержка эмодзи
 
-Используемые технологии:
+## Используемые технологии:
 - react-router-dom
 - ant-design + ant-design/icons
 - redux toolkit + react-redux
