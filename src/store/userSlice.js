@@ -6,6 +6,7 @@ const usersSlice = createSlice({
   initialState: {
     users: [],
     active: undefined,
+    error: undefined,
   },
   reducers: {
     loginUser(state, action) {
@@ -25,11 +26,21 @@ const usersSlice = createSlice({
         state.active = activeUser;
       }
     },
-    joinUserToRoom(state, { payload: { userName, roomName } }) {
+    joinUserToRoom(state, { payload: { userName, roomName, allRooms } }) {
       const users = JSON.parse(localStorage.getItem('users'));
+      if (!allRooms.map((room) => room.name.toLowerCase()).includes(roomName.toLowerCase())) {
+        state.error = `Комнаты с названием "${roomName}" не существует`;
+        return;
+      }
+
       const updateUsers = users.map((user) => {
-        if (user.name.toLowerCase() != userName.toLowerCase() || user.rooms.includes(roomName))
+        if (user.name.toLowerCase() != userName.toLowerCase()) {
           return user;
+        } else if (user.rooms.map((room) => room.toLowerCase()).includes(roomName.toLowerCase())) {
+          state.error = `Вы уже состоите в комнате "${roomName}"`;
+          return user;
+        }
+
         return { ...user, rooms: [...user.rooms, roomName] };
       });
       state.users = updateUsers;
@@ -38,6 +49,7 @@ const usersSlice = createSlice({
     },
     logout(state, action) {
       state.active = undefined;
+      state.error = undefined;
     },
   },
   extraReducers: (builder) => {

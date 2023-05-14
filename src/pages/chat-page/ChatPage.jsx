@@ -6,7 +6,7 @@ import ChatRooms from '../../components/chat/chat-rooms/ChatRooms';
 import ChatWriteForm from '../../components/chat/chat-write-form/ChatWriteForm';
 import './ChatPage.scss';
 import { useSelector } from 'react-redux';
-import { getError, getRoomActive } from '../../store/selectors';
+import { getErrorRooms, getErrorUser, getRoomActive } from '../../store/selectors';
 
 const users = ['John', 'Rick', 'Igor', 'Evgeniy'];
 
@@ -24,15 +24,24 @@ const ChatPage = ({ userName }) => {
   const [modalCreateOpen, setModalCreateOpen] = React.useState(false);
   const roomActive = useSelector((state) => getRoomActive(state));
 
-  const descriptionError = useSelector((state) => getError(state));
+  const errorsRoom = useSelector((state) => getErrorRooms(state));
+  const errorsUser = useSelector((state) => getErrorUser(state));
 
   React.useEffect(() => {
-    if (descriptionError)
+    if (errorsRoom)
       api['error']({
         message: 'Ошибка',
-        description: descriptionError,
+        description: errorsRoom,
       });
-  }, [descriptionError]);
+  }, [errorsRoom]);
+
+  React.useEffect(() => {
+    if (errorsUser)
+      api['error']({
+        message: 'Ошибка',
+        description: errorsUser,
+      });
+  }, [errorsUser]);
 
   return (
     <>

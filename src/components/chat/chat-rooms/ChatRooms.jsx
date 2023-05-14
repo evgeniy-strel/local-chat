@@ -9,6 +9,7 @@ import { joinUserToRoom } from '../../../store/userSlice';
 
 const ChatRooms = ({ modalJoinOpen, modalCreateOpen, setModalCreateOpen, setModalJoinOpen }) => {
   const dispatch = useDispatch();
+  const allRooms = useSelector((state) => getRooms(state));
   const userRooms = useSelector((state) => getUserRooms(state));
   const roomActive = useSelector((state) => getRoomActive(state));
 
@@ -23,14 +24,13 @@ const ChatRooms = ({ modalJoinOpen, modalCreateOpen, setModalCreateOpen, setModa
   };
 
   const addRoomLocal = ({ roomName }) => {
-    const answer = dispatch(addRoom({ roomName, userName }));
-    console.log(answer);
+    dispatch(addRoom({ roomName, userName }));
     setModalCreateOpen(false);
     formAdd.resetFields();
   };
 
   const joinRoomLocal = ({ roomName }) => {
-    dispatch(joinUserToRoom({ roomName, userName }));
+    dispatch(joinUserToRoom({ roomName, userName, allRooms }));
     setModalJoinOpen(false);
     formJoin.resetFields();
   };
