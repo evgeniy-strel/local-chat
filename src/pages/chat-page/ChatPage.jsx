@@ -8,15 +8,6 @@ import './ChatPage.scss';
 import { useSelector } from 'react-redux';
 import { getErrorRooms, getErrorUser, getRoomActive } from '../../store/selectors';
 
-const users = ['John', 'Rick', 'Igor', 'Evgeniy'];
-
-const strangerMessages = [
-  'The number of cells to offset Col from the left',
-  'Raster order',
-  'The number of cells that raster is moved to the left',
-  'The number of cells that raster is moved to the right',
-];
-
 const ChatPage = ({ userName }) => {
   const [api, contextHolder] = notification.useNotification();
 
@@ -26,6 +17,8 @@ const ChatPage = ({ userName }) => {
 
   const errorsRoom = useSelector((state) => getErrorRooms(state));
   const errorsUser = useSelector((state) => getErrorUser(state));
+
+  const [selectedImage, setSelectedImage] = React.useState();
 
   React.useEffect(() => {
     if (errorsRoom)
@@ -64,8 +57,8 @@ const ChatPage = ({ userName }) => {
           <Col md={16}>
             <main>
               <div className="title-room">{roomActive?.name}</div>
-              <ChatMessages messages={strangerMessages} />
-              <ChatWriteForm />
+              <ChatMessages image={selectedImage} />
+              <ChatWriteForm selectedImage={selectedImage} setSelectedImage={setSelectedImage} />
             </main>
           </Col>
         </Row>

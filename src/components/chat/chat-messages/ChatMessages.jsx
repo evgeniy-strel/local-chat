@@ -4,7 +4,7 @@ import { Avatar, Empty } from 'antd';
 import { useSelector } from 'react-redux';
 import { getRoomActive } from '../../../store/selectors';
 
-const ChatMessages = () => {
+const ChatMessages = ({ image }) => {
   const messages = useSelector((state) => getRoomActive(state))?.messages;
 
   if (!messages?.length) {
@@ -51,12 +51,36 @@ const ChatMessages = () => {
             </div>
             <div className="user-name-text">
               <div className="user-name">{message?.userName}</div>
-              <div className="text">{message?.text}</div>
+              <div className="text">
+                {message?.text?.slice(0, 5) === 'data:' ? (
+                  <img src={message?.text} alt="not found" />
+                ) : (
+                  message?.text
+                )}
+              </div>
             </div>
           </div>
           <div className="date">{getFormattedDate(message?.date)}</div>
         </div>
       ))}
+      {image && (
+        <div className="message">
+          <div className="avatar-message-flex">
+            <div>
+              <Avatar className="user-avatar" size="large">
+                {'S'}
+              </Avatar>
+            </div>
+            <div className="user-name-text">
+              <div className="user-name">{'Andrey'}</div>
+              <div className="text">
+                <img src={URL.createObjectURL(image)} width={250} height={200} alt="not found" />
+              </div>
+            </div>
+          </div>
+          <div className="date">5</div>
+        </div>
+      )}
     </div>
   );
 };

@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addMessageToRoom } from '../../../store/roomSlice';
 import { getUserName } from '../../../store/selectors';
 
-const ChatWriteForm = () => {
+const ChatWriteForm = ({ selectedImage, setSelectedImage }) => {
   const [messageText, setMessageText] = React.useState('');
   const [isShownEmojiPicker, setIsShownEmojiPicker] = React.useState(false);
   const userName = useSelector((state) => getUserName(state));
@@ -24,6 +24,24 @@ const ChatWriteForm = () => {
     setMessageText(e.target.value);
   };
 
+  const addFile = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    reader.onload = function () {
+      const result = reader.result;
+      dispatch(addMessageToRoom({ userName, messageText: result }));
+    };
+    reader.onerror = function (error) {
+      alert('Произошла ошибка загрузки файла: ', error);
+    };
+
+    console.log(file);
+  };
+
   const onClickEmojiIcon = () => {
     setIsShownEmojiPicker((value) => !value);
   };
@@ -35,7 +53,18 @@ const ChatWriteForm = () => {
   return (
     <div className="write-form">
       <div className="clip icon">
-        <PaperClipOutlined />
+        <input
+          type="file"
+          name="file"
+          id="image"
+          style={{ display: 'none' }}
+          onChange={(e) => {
+            addFile(e);
+          }}
+        />
+        <label for="image">
+          <PaperClipOutlined />
+        </label>
       </div>
       <div className="text">
         <Input
