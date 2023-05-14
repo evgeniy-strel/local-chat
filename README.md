@@ -7,7 +7,7 @@ npm install
 npm run start
 ```
 
-![Демонстрация чата](https://github.com/evgeniy-strel/local-chat/assets/82458628/6d749507-d24d-498a-a4d7-9b7db9ab01eb)
+![Демонстрация чата](https://i.ibb.co/p0JtBx8/local-chat-new.png)
 
 Посмотреть проект: https://evgeniy-strel.github.io/local-chat
 
