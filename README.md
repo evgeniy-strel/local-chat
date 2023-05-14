@@ -7,7 +7,7 @@ npm install
 npm run start
 ```
 
-![Демонстрация чата](![image](https://github.com/evgeniy-strel/local-chat/assets/82458628/6d749507-d24d-498a-a4d7-9b7db9ab01eb))
+![Демонстрация чата](https://img-host.ru/b9GEd.png)
 
 Функционал:
 - вход по имени;
