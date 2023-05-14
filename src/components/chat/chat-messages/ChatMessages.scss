@@ -16,6 +16,9 @@
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
+    &.my-message {
+      background-color: var(--blue-color-4);
+    }
     .avatar-message-flex {
       display: flex;
       gap: 1rem;

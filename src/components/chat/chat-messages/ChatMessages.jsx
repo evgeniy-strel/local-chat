@@ -2,10 +2,11 @@ import React from 'react';
 import './ChatMessages.scss';
 import { Avatar, Empty } from 'antd';
 import { useSelector } from 'react-redux';
-import { getRoomActive } from '../../../store/selectors';
+import { getRoomActive, getUserName } from '../../../store/selectors';
 
 const ChatMessages = ({ image }) => {
   const messages = useSelector((state) => getRoomActive(state))?.messages;
+  const userName = useSelector((state) => getUserName(state));
 
   if (!messages?.length) {
     return <Empty description="Напишите первое сообщение" className="empty-block" />;
@@ -42,7 +43,9 @@ const ChatMessages = ({ image }) => {
   return (
     <div className="messages">
       {messages.map((message, index) => (
-        <div key={index} className="message">
+        <div
+          key={index}
+          className={`message ${message?.userName === userName ? 'my-message' : ''}`}>
           <div className="avatar-message-flex">
             <div>
               <Avatar className="user-avatar" size="large">
