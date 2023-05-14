@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, Row, notification } from 'antd';
+import { Col, Empty, Row, notification } from 'antd';
 import ChatHeader from '../../components/chat/chat-header/ChatHeader';
 import ChatMessages from '../../components/chat/chat-messages/ChatMessages';
 import ChatRooms from '../../components/chat/chat-rooms/ChatRooms';
@@ -55,11 +55,17 @@ const ChatPage = ({ userName }) => {
             setModalCreateOpen={setModalCreateOpen}
           />
           <Col md={16}>
-            <main>
-              <div className="title-room">{roomActive?.name}</div>
-              <ChatMessages image={selectedImage} />
-              <ChatWriteForm selectedImage={selectedImage} setSelectedImage={setSelectedImage} />
-            </main>
+            {roomActive ? (
+              <main>
+                <div className="title-room">{roomActive?.name}</div>
+                <ChatMessages image={selectedImage} />
+                <ChatWriteForm selectedImage={selectedImage} setSelectedImage={setSelectedImage} />
+              </main>
+            ) : (
+              <div className="empty-block">
+                <Empty description="Выберите комнату для просмотра сообщений" />
+              </div>
+            )}
           </Col>
         </Row>
       </div>
